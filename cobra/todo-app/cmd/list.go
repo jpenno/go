@@ -4,9 +4,8 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	fileio "cli-todoapp/internal/fileIO"
+	"cli-todoapp/internal/fileIO"
 	"cli-todoapp/internal/todo"
-	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -16,23 +15,14 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "list all todos",
 	Long:  `List all todos`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
-		todos := fileio.GetTodos("./assets/data.json")
-		todo.PrintTodos(todos)
-	},
+	Run:   listTodoCmd,
 }
 
 func init() {
 	rootCmd.AddCommand(listCmd)
+}
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// listCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func listTodoCmd(cmd *cobra.Command, args []string) {
+	todos := fileio.GetTodos("./assets/data.json")
+	todo.PrintTodos(todos)
 }
