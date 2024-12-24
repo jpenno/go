@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	CONFIG Config
+	C Config
 )
 
 type Config struct {
@@ -13,5 +13,5 @@ type Config struct {
 }
 
 func Init() {
-	CONFIG = fileio.GetJson("./assets/config.json", Config{})
+	C = fileio.GetJson("./assets/config.json", Config{})
 }

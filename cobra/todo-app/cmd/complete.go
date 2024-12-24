@@ -24,10 +24,10 @@ var completeCmd = &cobra.Command{
 		fmt.Println("complete called")
 		id, _ := strconv.Atoi(args[0])
 		var todos []todo.Todo
-		todos = fileio.GetJson(config.CONFIG.Path, todos)
+		todos = fileio.GetJson(config.C.Path, todos)
 		todos[id-1].Done = true
 		fmt.Println(todos[id-1])
-		fileio.SaveJson(config.CONFIG.Path, todos)
+		fileio.SaveJson(config.C.Path, todos)
 	},
 }
 

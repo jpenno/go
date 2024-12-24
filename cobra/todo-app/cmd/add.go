@@ -24,10 +24,10 @@ var addCmd = &cobra.Command{
 
 		task := args[0]
 		var todos []todo.Todo
-		todos = fileio.GetJson(config.CONFIG.Path, todos)
+		todos = fileio.GetJson(config.C.Path, todos)
 		newTodo := todo.New(len(todos), task, false)
 		todos = append(todos, newTodo)
-		fileio.SaveJson(config.CONFIG.Path, todos)
+		fileio.SaveJson(config.C.Path, todos)
 		fmt.Printf("add: %v\n", task)
 	},
 }
