@@ -4,11 +4,14 @@ import (
 	"cli-todoapp/internal/fileIO"
 )
 
+var (
+	CONFIG Config
+)
+
 type Config struct {
 	Path string `json:"path"`
 }
 
-func LoadConfig() Config {
-	conf := fileio.GetJson("./assets/config.json", Config{})
-	return conf
+func Init() {
+	CONFIG = fileio.GetJson("./assets/config.json", Config{})
 }

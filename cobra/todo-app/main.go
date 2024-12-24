@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
+	config.Init()
 	cmd.Execute()
-
-	config.LoadConfig()
 }

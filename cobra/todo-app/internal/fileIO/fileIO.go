@@ -1,7 +1,6 @@
 package fileio
 
 import (
-	"cli-todoapp/internal/todo"
 	"encoding/json"
 	"os"
 )
@@ -17,8 +16,8 @@ func GetJson[T any](path string, t T) T {
 	return t
 }
 
-func SaveTodos(path string, todos []todo.Todo) {
-	jsonString, err := json.MarshalIndent(todos, "", "  ")
+func SaveJson[T any](path string, t T) {
+	jsonString, err := json.MarshalIndent(t, "", "  ")
 	if err != nil {
 		panic(err)
 	}
@@ -28,6 +27,4 @@ func SaveTodos(path string, todos []todo.Todo) {
 		panic(err)
 	}
 	f.WriteString(string(jsonString))
-
-	// os.WriteFile(path, jsonString, os.ModePerm)
 }

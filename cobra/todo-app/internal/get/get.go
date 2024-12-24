@@ -7,9 +7,8 @@ import (
 )
 
 func GetTodos() []todo.Todo {
-	conf := config.LoadConfig()
 	var todos []todo.Todo
-	todos = fileio.GetJson(conf.Path, todos)
+	todos = fileio.GetJson(config.CONFIG.Path, todos)
 	return todos
 }
 
