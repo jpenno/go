@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "task": "learn go",
+    "task": "add complete task to todo list app",
     "done": false
   },
   {
     "id": 2,
-    "task": "learn json",
+    "task": "add add task to todo list app",
     "done": false
   },
   {
