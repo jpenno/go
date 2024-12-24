@@ -6,16 +6,15 @@ import (
 	"os"
 )
 
-func GetTodos(path string) []todo.Todo {
+func GetJson[T any](path string, t T) T {
 	fileData, err := os.ReadFile(path)
 	if err != nil {
 		panic(err)
 	}
 
-	var todos []todo.Todo
-	json.Unmarshal(fileData, &todos)
+	json.Unmarshal(fileData, &t)
 
-	return todos
+	return t
 }
 
 func SaveTodos(path string, todos []todo.Todo) {
