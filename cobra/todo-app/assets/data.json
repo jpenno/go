@@ -2,7 +2,7 @@
   {
     "id": 1,
     "task": "add complete task to todo list app",
-    "done": false
+    "done": true
   },
   {
     "id": 2,
@@ -11,12 +11,12 @@
   },
   {
     "id": 3,
-    "task": "read a book",
+    "task": "add tests for list taks",
     "done": true
   },
   {
     "id": 4,
-    "task": "make a todo app",
+    "task": "add tests for complete task",
     "done": false
   }
 ]
