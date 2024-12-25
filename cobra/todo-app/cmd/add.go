@@ -4,9 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"cli-todoapp/internal/config"
-	fileio "cli-todoapp/internal/fileIO"
-	"cli-todoapp/internal/todo"
+	"cli-todoapp/internal/add"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -21,13 +19,8 @@ var addCmd = &cobra.Command{
 	add "task to do"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
-
 		task := args[0]
-		var todos []todo.Todo
-		todos = fileio.GetJson(config.C.Path, todos)
-		newTodo := todo.New(len(todos), task, false)
-		todos = append(todos, newTodo)
-		fileio.SaveJson(config.C.Path, todos)
+		add.Add(task)
 		fmt.Printf("add: %v\n", task)
 	},
 }
