@@ -4,8 +4,6 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"cli-todoapp/internal/config"
-	fileio "cli-todoapp/internal/fileIO"
 	"cli-todoapp/internal/todo"
 	"fmt"
 	"strconv"
@@ -23,11 +21,7 @@ var completeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("complete called")
 		id, _ := strconv.Atoi(args[0])
-		var todos []todo.Todo
-		todos = fileio.GetJson(config.C.Path, todos)
-		todos[id-1].Done = true
-		fmt.Println(todos[id-1])
-		fileio.SaveJson(config.C.Path, todos)
+		todo.Complete(id)
 	},
 }
 

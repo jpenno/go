@@ -4,7 +4,6 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"cli-todoapp/internal/get"
 	"cli-todoapp/internal/todo"
 
 	"github.com/spf13/cobra"
@@ -23,6 +22,5 @@ func init() {
 }
 
 func listTodoCmd(cmd *cobra.Command, args []string) {
-	todos := get.GetTodos()
-	todo.PrintTodos(todos)
+	todo.PrintTodos(todo.GetTodos())
 }

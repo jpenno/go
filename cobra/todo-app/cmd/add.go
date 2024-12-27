@@ -4,7 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"cli-todoapp/internal/add"
+	"cli-todoapp/internal/todo"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -18,9 +18,10 @@ var addCmd = &cobra.Command{
 	eg:
 	add "task to do"`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
 		task := args[0]
-		add.Add(task)
+
+		todo.AddTask(task)
+
 		fmt.Printf("add: %v\n", task)
 	},
 }
