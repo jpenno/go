@@ -13,11 +13,17 @@ var (
 
 func Init() {
 	todos = fileio.GetJson(config.C.Path, todos)
+	syncIds()
 }
 
 func AddTask(task string) {
-	todo := Todo{len(todos), task, false}
+	todo := Todo{len(todos) + 1, task, false}
 	todos = append(todos, todo)
+	fileio.SaveJson(config.C.Path, todos)
+}
+
+func DeleteTodo(id int) {
+	todos = remove(todos, id-1)
 	fileio.SaveJson(config.C.Path, todos)
 }
 
@@ -39,4 +45,14 @@ func Complete(id int) {
 	completeTodo, _ := GetById(id)
 	completeTodo.Done = !completeTodo.Done
 	fileio.SaveJson(config.C.Path, todos)
+}
+
+func syncIds() {
+	for i := range todos {
+		todos[i].Id = i + 1
+	}
+}
+
+func remove[t any](slice []t, s int) []t {
+	return append(slice[:s], slice[s+1:]...)
 }
