@@ -5,6 +5,7 @@ import (
 	fileio "cli-todoapp/internal/fileIO"
 	"errors"
 	"fmt"
+	"strings"
 )
 
 var (
@@ -14,6 +15,35 @@ var (
 func Init() {
 	todos = fileio.GetJson(config.C.Path, todos)
 	syncIds()
+
+	text := fileio.GeaTodos(config.C.Todo)
+	test := getTodosFromMd(text)
+	PrintTodos(test)
+}
+
+func getTodosFromMd(text string) []Todo {
+	lines := strings.Split(text, "\n")
+	id := 1
+	var todos []Todo
+	for _, line := range lines {
+		if len(line) == 0 {
+			continue
+		}
+
+		var newTodo Todo
+		if line[0] == '-' {
+			if line[3] == ' ' {
+				newTodo.Done = false
+			}
+			newTodo.Task = line[6:]
+			newTodo.Id = id
+			id++
+
+			todos = append(todos, newTodo)
+		}
+	}
+
+	return todos
 }
 
 func AddTask(task string) {

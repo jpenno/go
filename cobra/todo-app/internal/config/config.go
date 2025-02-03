@@ -1,7 +1,7 @@
 package config
 
 import (
-	"cli-todoapp/internal/fileIO"
+	fileio "cli-todoapp/internal/fileIO"
 )
 
 var (
@@ -10,6 +10,7 @@ var (
 
 type Config struct {
 	Path string `json:"path"`
+	Todo string `json:"todo"`
 }
 
 func Init() {
