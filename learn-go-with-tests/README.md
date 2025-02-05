@@ -5,3 +5,4 @@
 - [Hello world](./hello-world/README.md)
 - [integers](./integers/README.md)
 - [arrays](./arrays/README.md)
+- [structs](./structs/README.md)
