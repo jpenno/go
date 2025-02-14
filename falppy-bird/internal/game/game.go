@@ -2,6 +2,8 @@ package game
 
 import (
 	"flappy-bird/internal/player"
+	"flappy-bird/internal/state"
+
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -15,9 +17,19 @@ func (g *Game) Init() error {
 	return nil
 }
 
-func (g *Game) Update() {
+func (g *Game) Update() state.APP_STATE {
 	dt := rl.GetFrameTime()
 	g.player.Update(dt)
+
+	if rl.IsKeyPressed(rl.KeyEscape) {
+		return state.PAUSE
+	}
+
+	if g.player.State == player.DEAD {
+		return state.GAME_OVER
+	}
+
+	return state.PLAY
 }
 
 func (g *Game) Draw() {
