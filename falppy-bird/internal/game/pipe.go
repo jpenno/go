@@ -4,24 +4,50 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-type Pipe struct {
+type pipe struct {
 	rect     rl.Rectangle
-	pos      rl.Vector2
-	size     rl.Vector2
 	velocity rl.Vector2
+	active   bool
 }
 
-func pipeInit(rect rl.Rectangle) Pipe {
-	return Pipe{
+func spawnPipePair(gape rl.Rectangle) []pipe {
+	pipes := make([]pipe, 2)
+	var posX float32 = 800
+
+	rect := rl.Rectangle{
+		X:      posX,
+		Y:      0,
+		Width:  50,
+		Height: gape.Y,
+	}
+	pipes[0] = pipeInit(rect)
+
+	rect = rl.Rectangle{
+		X:      posX,
+		Y:      gape.Y + gape.Height,
+		Width:  50,
+		Height: float32(rl.GetScreenHeight()),
+	}
+	pipes[1] = pipeInit(rect)
+
+	return pipes
+}
+
+func pipeInit(rect rl.Rectangle) pipe {
+	return pipe{
 		rect:     rect,
 		velocity: rl.Vector2{X: -200.0, Y: 0.0},
+		active:   true,
 	}
 }
 
-func (p *Pipe) update(dt float32) {
+func (p *pipe) update(dt float32) {
 	p.rect.X += p.velocity.X * dt
+	if p.rect.X-p.rect.Width < 0 {
+		p.active = false
+	}
 }
 
-func (p *Pipe) draw() {
+func (p *pipe) draw() {
 	rl.DrawRectangleRec(p.rect, rl.Green)
 }
