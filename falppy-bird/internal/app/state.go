@@ -1,4 +1,4 @@
-package state
+package app
 
 type APP_STATE int
 

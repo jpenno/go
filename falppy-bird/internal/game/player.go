@@ -1,4 +1,4 @@
-package player
+package game
 
 import (
 	"fmt"
@@ -14,48 +14,51 @@ const (
 )
 
 type Player struct {
-	pos      rl.Vector2
+	rect     rl.Rectangle
 	velocity rl.Vector2
-	size     rl.Vector2
 	garvity  float32
 	State    PLAYER_STATE
 }
 
-func PlayerInit() Player {
+func playerInit() Player {
 	var garvity float32 = 300
 	return Player{
-		garvity:  garvity,
-		pos:      rl.Vector2{X: 100, Y: 100},
-		velocity: rl.Vector2{X: 100, Y: garvity},
-		size:     rl.Vector2{X: 100, Y: 100},
+		garvity: garvity,
+		rect: rl.Rectangle{
+			X:      100,
+			Y:      100,
+			Width:  100,
+			Height: 100,
+		},
+		velocity: rl.Vector2{X: 0, Y: garvity},
 		State:    ALIVE,
 	}
 }
 
-func (p *Player) Update(dt float32) PLAYER_STATE {
+func (p *Player) update(dt float32) PLAYER_STATE {
 	if p.velocity.Y < p.garvity {
 		p.velocity.Y += 3_500 * dt
 	}
 
-	p.pos.Y += p.velocity.Y * dt
-
 	if rl.IsKeyPressed(rl.KeySpace) {
 		p.velocity.Y = -800
-		p.pos.X += p.velocity.X * dt
+		p.rect.X += p.velocity.X * dt
 	}
 
-	if p.pos.Y < 0 {
+	p.rect.Y += p.velocity.Y * dt
+
+	if p.rect.Y < 0 {
 		p.State = DEAD
 	}
-	if p.pos.Y > float32(rl.GetScreenHeight()) {
+	if p.rect.Y > float32(rl.GetScreenHeight()) {
 		p.State = DEAD
 	}
 
 	return p.State
 }
 
-func (p Player) Draw() {
-	rl.DrawRectangleV(p.pos, p.size, rl.Blue)
+func (p *Player) draw() {
+	rl.DrawRectangleRec(p.rect, rl.Blue)
 }
 
 func PrintPlayer() {

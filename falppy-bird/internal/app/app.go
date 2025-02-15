@@ -2,13 +2,12 @@ package app
 
 import (
 	"flappy-bird/internal/game"
-	"flappy-bird/internal/state"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type App struct {
-	state        state.APP_STATE
+	state        APP_STATE
 	game         game.Game
 	screenWidth  int32
 	screenHeight int32
@@ -17,7 +16,7 @@ type App struct {
 func (a *App) Init() {
 	a.screenWidth = 720
 	a.screenHeight = 1080
-	a.state = state.START
+	a.state = START
 
 	rl.InitWindow(a.screenWidth, a.screenHeight, "flappy bird clone")
 
@@ -32,7 +31,7 @@ func (a *App) Close() {
 }
 
 func (a *App) Run() {
-	for a.state != state.QUIT {
+	for a.state != QUIT {
 		a.update()
 		a.draw()
 	}
@@ -40,14 +39,29 @@ func (a *App) Run() {
 
 func (a *App) update() {
 	switch a.state {
-	case state.START:
+	case START:
 		a.updateStart()
-	case state.PLAY:
-		a.state = a.game.Update()
-	case state.PAUSE:
+	case PLAY:
+		a.updaetPlay()
+	case PAUSE:
 		a.updatePaused()
-	case state.GAME_OVER:
+	case GAME_OVER:
 		a.updateGameover()
+	}
+}
+
+func (a *App) updaetPlay() {
+	switch a.game.Update() {
+	case game.GAME_OVER:
+		a.state = GAME_OVER
+	case game.PAUSE:
+		a.state = PAUSE
+	case game.PLAYING:
+		a.state = PLAY
+	case game.QUIT:
+		a.state = QUIT
+	default:
+		panic("unexpected game.GAME_STATE")
 	}
 }
 
@@ -55,13 +69,13 @@ func (a *App) draw() {
 	rl.BeginDrawing()
 
 	switch a.state {
-	case state.START:
+	case START:
 		a.drawStart()
-	case state.PLAY:
+	case PLAY:
 		a.game.Draw()
-	case state.PAUSE:
+	case PAUSE:
 		a.drawPause()
-	case state.GAME_OVER:
+	case GAME_OVER:
 		a.drawGameover()
 	}
 
@@ -70,33 +84,33 @@ func (a *App) draw() {
 
 func (a *App) updateGameover() {
 	if rl.IsKeyPressed(rl.KeyR) {
-		a.state = state.PLAY
+		a.state = PLAY
 		a.game.Init()
 	}
 	if rl.IsKeyPressed(rl.KeyEscape) {
-		a.state = state.QUIT
+		a.state = QUIT
 	}
 }
 
 func (a *App) updatePaused() {
 	if rl.IsKeyPressed(rl.KeySpace) {
-		a.state = state.PLAY
+		a.state = PLAY
 	}
 	if rl.IsKeyPressed(rl.KeyEscape) {
-		a.state = state.START
+		a.state = START
 	}
 	if rl.IsKeyPressed(rl.KeyQ) {
-		a.state = state.QUIT
+		a.state = QUIT
 	}
 }
 
 func (a *App) updateStart() {
 	if rl.IsKeyPressed(rl.KeySpace) {
-		a.state = state.PLAY
+		a.state = PLAY
 		a.game.Init()
 	}
 	if rl.IsKeyPressed(rl.KeyEscape) {
-		a.state = state.QUIT
+		a.state = QUIT
 	}
 }
 
