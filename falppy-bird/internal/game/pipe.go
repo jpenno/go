@@ -7,7 +7,7 @@ import (
 type pipe struct {
 	rect     rl.Rectangle
 	velocity rl.Vector2
-	active   bool
+	Active   bool
 }
 
 func spawnPipePair(gape rl.Rectangle) []pipe {
@@ -37,14 +37,14 @@ func pipeInit(rect rl.Rectangle) pipe {
 	return pipe{
 		rect:     rect,
 		velocity: rl.Vector2{X: -200.0, Y: 0.0},
-		active:   true,
+		Active:   true,
 	}
 }
 
 func (p *pipe) update(dt float32) {
 	p.rect.X += p.velocity.X * dt
 	if p.rect.X-p.rect.Width < 0 {
-		p.active = false
+		p.Active = false
 	}
 }
 
