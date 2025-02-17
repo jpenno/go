@@ -43,7 +43,8 @@ func pipeInit(rect rl.Rectangle) pipe {
 
 func (p *pipe) update(dt float32) {
 	p.rect.X += p.velocity.X * dt
-	if p.rect.X-p.rect.Width < 0 {
+
+	if p.rect.X+p.rect.Width < 0 {
 		p.Active = false
 	}
 }
